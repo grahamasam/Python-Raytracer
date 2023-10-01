@@ -30,5 +30,8 @@ class TestTuplePointVector(unittest.TestCase):
   def test_vector_constructor(self):
     self.assertTrue(self.vector2.equals(self.vector1))
 
+  def add_tuples(self):
+    self.assertEqual(self.vector1.add(self.point1), Tuple(8.7, -8.2, 6.2, 1.0))
+
 if __name__ == "__main__":
   unittest.main()

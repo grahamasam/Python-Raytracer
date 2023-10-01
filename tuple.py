@@ -20,4 +20,10 @@ class Tuple():
   
   def equals(self, tuple):
     return self.x == tuple.x and self.y == tuple.y and self.z == tuple.z and self.w == tuple.w
+  
+  def add(self, tuple):
+    return Tuple(self.x + tuple.x, self.y + tuple.y, self.z + tuple.z, self.w + tuple.w)
+  
+  def subtract(self, tuple):
+    return Tuple(self.x - tuple.x, self.y - tuple.y, self.z - tuple.z, self.w - tuple.w)
            
