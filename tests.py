@@ -10,6 +10,7 @@ class TestTuplePointVector(unittest.TestCase):
     self.point2 = Point(4.3, -4.2, 3.1)
     self.vector2 = Vector(4.3, -4.2, 3.1)
     self.a = Tuple(1, 2, 3, 4)
+    self.b = Tuple(4, 3, 2, 1)
 
   def test_tuple_construction_point(self):
     self.assertEqual(self.point1.x, 4.3)
@@ -37,14 +38,17 @@ class TestTuplePointVector(unittest.TestCase):
   def test_subtract_tuples(self):
     self.assertTrue(self.point2.subtract(self.vector2).equals(Tuple(w=1.0)))
 
-  def test_negate(self):
-    self.assertTrue(self.vector1.negate().equals(Tuple(-4.3, 4.2, -3.1, 0.0)))
-
   def test_mul_operator(self):
     self.assertTrue((self.a * 2).equals(Tuple(2, 4, 6, 8)))
 
   def test_rmul_operator(self):
     self.assertTrue((2 * self.a).equals(Tuple(2, 4, 6, 8)))
+
+  def test_neg_opeartor(self):
+    self.assertTrue((-Tuple(1,2,3,4)).equals(Tuple(-1,-2,-3,-4)))
+
+  def test_dot_prodcut(self):
+    self.assertEquals(self.a.dot_product(self.b), 20)
 
 if __name__ == "__main__":
   unittest.main()

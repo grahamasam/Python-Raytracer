@@ -1,3 +1,5 @@
+import math
+
 class Tuple():
   # class to contain three data points
   # w determiner to specify data type
@@ -28,7 +30,7 @@ class Tuple():
     return Tuple(self.x - tuple.x, self.y - tuple.y, self.z - tuple.z, self.w - tuple.w)
   
   def multiply(self, scalar):
-    return Tuple
+    return Tuple(self.x * scalar, self.y * scalar, self.z * scalar, self.w * scalar)
   
   # dunder methods (operator overload) for basic vector operations
 
@@ -38,6 +40,10 @@ class Tuple():
   def __sub__(self, other):
     return Tuple(self.x - other.x, self.y - other.y, self.z - other.z, self.w + other.w)
 
+  # override unary minus operator for -vector negation
+  def __neg__(self):
+    return Tuple(-self.x, -self.y, -self.z, -self.w)
+  
   # function to multiply a vector by a number (vec * 3)
   def __mul__(self, num):
     # this assert will fail if num is a Tuple
@@ -47,10 +53,15 @@ class Tuple():
   # function to multiply a vector by a number (when the vector is on the right; 3 * vec)
   def __rmul__(self, num):
     return self.__mul__(num)
+
+  # in Python3, A / B calls A.__truediv__()
+  # we need a __truediv__() method for our vector operations
+  def __truediv__(self, num):
+    assert not isinstance(num, Tuple)
+    return Tuple(self.x / num, self.y / num, self.z / num)
   
-  def negate(self):
-    self.x = -self.x
-    self.y = -self.y
-    self.z = -self.z
-    self.w = -self.w
-    return self
+  def dot_product(self, obj):
+    return self.x * obj.x + self.y * obj.y + self.z * obj.z + self.w * obj.w
+  
+  def magnitude(self):
+    return math.sqrt(self.dot_product(self))
