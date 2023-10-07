@@ -2,6 +2,7 @@ import unittest
 from tuple import Tuple
 from vector import Vector
 from point import Point
+from color import Color
 
 class TestTuplePointVector(unittest.TestCase):
   def setUp(self):
@@ -12,6 +13,8 @@ class TestTuplePointVector(unittest.TestCase):
     self.a = Tuple(1, 2, 3, 4)
     self.b = Tuple(4, 3, 2, 1)
     self.c = Tuple(1, 0, 0, 0)
+    self.color1 = Color(1, 0, 1)
+    self.color2 = Color(0.5, 1, 0)
 
   def test_tuple_construction_point(self):
     self.assertEqual(self.point1.x, 4.3)
@@ -62,6 +65,24 @@ class TestTuplePointVector(unittest.TestCase):
     vector2 = Vector(2,3,4)
     self.assertTrue(vector1.cross(vector2).equals(Vector(-1,2,-1)))
     self.assertTrue(vector2.cross(vector1).equals(Vector(1,-2,1)))
+
+  def test_color_constructor(self):
+    c = Color(1, 0, 1)
+    self.assertEqual(c.x, 1)
+    self.assertEqual(c.y, 0)
+    self.assertEqual(c.z, 1)
+
+  def test_add_color(self):
+    self.assertTrue((self.color1 + self.color2).equals(Color(1.5, 1, 1)))
+
+  def test_subtract_color(self):
+    self.assertTrue((self.color1 - self.color2).equals(Color(0.5, -1, 1)))
+
+  def test_multiply_color_scalar(self):
+    self.assertTrue((self.color2 * 3).equals(Color(1.5, 3, 0)))
+
+  def test_multiply_colors(self):
+    self.assertTrue((self.color1.multiply(self.color2)).equals(Color(0.5, 0, 0)))
 
 if __name__ == "__main__":
   unittest.main()
