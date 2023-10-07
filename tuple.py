@@ -10,6 +10,9 @@ class Tuple():
     self.z = z
     self.w = w
 
+  def __str__(self):
+    return "({}, {}, {}, {})".format(self.x, self.y, self.z, self.w)
+
   def is_vector(self):
     if (self.w == 0.0):
       return True
@@ -65,3 +68,6 @@ class Tuple():
   
   def magnitude(self):
     return math.sqrt(self.dot_product(self))
+  
+  def normalize(self):
+    return self / self.magnitude()

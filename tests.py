@@ -11,6 +11,7 @@ class TestTuplePointVector(unittest.TestCase):
     self.vector2 = Vector(4.3, -4.2, 3.1)
     self.a = Tuple(1, 2, 3, 4)
     self.b = Tuple(4, 3, 2, 1)
+    self.c = Tuple(1, 0, 0, 0)
 
   def test_tuple_construction_point(self):
     self.assertEqual(self.point1.x, 4.3)
@@ -48,7 +49,13 @@ class TestTuplePointVector(unittest.TestCase):
     self.assertTrue((-Tuple(1,2,3,4)).equals(Tuple(-1,-2,-3,-4)))
 
   def test_dot_prodcut(self):
-    self.assertEquals(self.a.dot_product(self.b), 20)
+    self.assertEqual(self.a.dot_product(self.b), 20)
+
+  def test_magnitude(self):
+    self.assertEqual(self.c.magnitude(), 1)
+
+  def test_normalize(self):
+    self.assertEqual(self.vector1.normalize().magnitude(), 1)
 
 if __name__ == "__main__":
   unittest.main()
