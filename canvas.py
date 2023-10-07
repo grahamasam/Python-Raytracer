@@ -16,3 +16,15 @@ class Canvas():
   def pixel_at(self, x, y):
     return self.pixels[x][y]
 
+  def canvas_to_ppm_string(self):
+    ppm = ""
+
+    def to_byte(c):
+      return round(max(min(c * 255, 255), 0))
+    
+    # write image header
+    ppm = ("P3 {} {}\n255\n".format(self.width, self.height))
+
+    
+
+    return ppm
