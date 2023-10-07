@@ -57,5 +57,11 @@ class TestTuplePointVector(unittest.TestCase):
   def test_normalize(self):
     self.assertEqual(self.vector1.normalize().magnitude(), 1)
 
+  def test_cross_product(self):
+    vector1 = Vector(1,2,3)
+    vector2 = Vector(2,3,4)
+    self.assertTrue(vector1.cross(vector2).equals(Vector(-1,2,-1)))
+    self.assertTrue(vector2.cross(vector1).equals(Vector(1,-2,1)))
+
 if __name__ == "__main__":
   unittest.main()

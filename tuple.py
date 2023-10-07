@@ -71,3 +71,4 @@ class Tuple():
   
   def normalize(self):
     return self / self.magnitude()
+

@@ -9,3 +9,9 @@ class Vector(Tuple):
     self.z = z
     self.w = 0.0
   
+  # cross product for 3 dimensional vectors
+  def cross(self, obj):
+    assert isinstance(obj, Vector)
+    return Vector(self.y * obj.z - self.z * obj.y, 
+                  self.z * obj.x - self.x * obj.z,
+                  self.x * obj.y - self.y * obj.x )
