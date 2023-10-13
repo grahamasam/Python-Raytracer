@@ -81,7 +81,6 @@ class Matrix():
       array[i] = product
 
     return Tuple(array[0], array[1], array[2], array[3])
-    
   
   # operator override to multiply matrix by matrix or matrix by tuple
   def __mul__(self, obj):
@@ -92,3 +91,19 @@ class Matrix():
       return self.multiply_tuple(obj)
     if (isinstance(obj, Matrix)):
       return self.multiply_matrix(obj)
+    
+  def transpose(self):
+    assert(self.height == self.width)
+
+    transpose = Matrix(self.width, self.height)
+    
+    for i in range(self.height):
+      for j in range(self.width):
+        transpose.matrix[i][j] = self.matrix[j][i]
+
+    return transpose
+
+
+# global identity matrices
+
+identity_matrix_4 = Matrix.build_4_matrix((1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1))

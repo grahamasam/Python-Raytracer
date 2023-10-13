@@ -1,5 +1,5 @@
 import unittest
-from matrix import Matrix
+from matrix import Matrix, identity_matrix_4
 from tuple import Tuple
 
 class TestMatrix(unittest.TestCase):
@@ -53,6 +53,15 @@ class TestMatrix(unittest.TestCase):
     c = Matrix.build_4_matrix((1,1,1,1,2,2,2,2,1,1,1,1,1,0,0,0))
     self.assertTrue((c * tuple).equals(Tuple(10,20,10,1)))
 
+  def test_identity_matrix_4(self):
+    self.assertTrue((self.a * identity_matrix_4).equals(self.a))
+
+  def test_transpose(self):
+    transpose = Matrix.build_4_matrix((-2,3,4,1,1,2,3,2,2,1,6,7,3,-1,5,8))
+    self.assertTrue(self.b.transpose().equals(transpose))
+
+  def test_transpose_identity(self):
+    self.assertTrue(identity_matrix_4.transpose().equals(identity_matrix_4))
 
 if __name__ == "__main__":
   unittest.main()
