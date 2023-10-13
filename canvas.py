@@ -30,6 +30,9 @@ class Canvas():
     for row in self.pixels:
       count = 0
       for color in row:
+          # write each pixel representation (r g b) to the ppm string
+          # if a pixel would make the current line exceed 70 characters
+          # insert new line and reset count
           add = "{} {} {} ".format(to_byte(color.x), to_byte(color.y), to_byte(color.z))
           count += len(add)
           if count < 70:
