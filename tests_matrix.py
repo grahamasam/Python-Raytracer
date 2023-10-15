@@ -75,5 +75,23 @@ class TestMatrix(unittest.TestCase):
     #print(sub)
     #print(sub1)
 
+  def test_minor(self):
+    matrix = Matrix.build_matrix(([3,5,0],[2,-1,7],[6,-1,5]))
+    self.assertEqual(matrix.minor(1,0), 25)
+
+  def test_cofactor(self):
+    matrix = Matrix.build_matrix(([3,5,0],[2,-1,-7],[6,-1,5]))
+    self.assertEqual(matrix.cofactor(0,0), -12)
+    self.assertEqual(matrix.cofactor(1,0), -25)
+    det = matrix.determinant()
+    matrix2 = Matrix.build_matrix(([1,1,1,1],[0,3,5,0],[0,2,-1,-7],[0,6,-1,5]))
+    self.assertEqual(matrix2.cofactor(0,0), det)
+
+  def test_determinant(self):
+    matrix = Matrix.build_matrix(([-2,-8,3,5],[-3,1,7,3],[1,2,-9,6],[-6,7,7,-9]))
+    self.assertEqual(matrix.cofactor(0,0), 690)
+    self.assertEqual(matrix.cofactor(0,1), 447)
+    self.assertEqual(matrix.determinant(), -4071)
+
 if __name__ == "__main__":
   unittest.main()

@@ -117,13 +117,28 @@ class Matrix():
 
     return transpose
   
+  # functions to calculate determinant of 4x4 matrix
+  
   # calculate determinant of 2x2 matrix
-  def determinant(self):
+  def determinant_2(self):
     assert(self.height == 2)
     assert(self.width == 2)
 
     return self.matrix[1][1] * self.matrix[0][0] - self.matrix[1][0] * self.matrix[0][1]
   
+  def determinant(self):
+    assert(self.height == self.width)
+    det = 0
+    if (self.height == 2 and self.width == 2):
+      det = self.matrix[1][1] * self.matrix[0][0] - self.matrix[1][0] * self.matrix[0][1]
+    else:
+      for i in range(self.width):
+        det = det + self.matrix[0][i] * self.cofactor(0,i)
+
+    return det
+
+  
+  # return submatrix of given matrix removing input row and column
   def submatrix(self, row, col):
     assert(row <= self.height - 1)
     assert(col <= self.width - 1)
@@ -141,6 +156,32 @@ class Matrix():
       x = x + 1
       
     return submatrix
+  
+  # calculate minor of matrix. Minor is the determinant of submatrix removing input row and column
+  def minor(self, row, col):
+    assert(self.height == self.width)
+    submatrix = self.submatrix(row, col)
+
+    det = 0
+
+    if (submatrix.height > 2):
+      for i in range(submatrix.width):
+        det = det + submatrix.minor(0,i)
+    else:
+      det = submatrix.determinant()
+
+    return det
+  
+  # calculate cofactor of matrix. Cofactor is the minor from removing input row and column
+  # and negated depending on its location. Formula is (-1)^(i+j) * Aij where i and j are the
+  # row and column and A is the determinant of the submatrix obtained by removing ith row and
+  # jth column
+  def cofactor(self, row, col):
+    # Check if the matrix is square
+    if self.height != self.width:
+        raise ValueError("Matrix must be square for cofactors.")
+    submatrix = self.submatrix(row,col)
+    return  (-1) ** (row + col) * submatrix.determinant()
 
 
 # global identity matrices
