@@ -47,6 +47,20 @@ class Matrix():
         count = count + 1
     
     return new_matrix
+  
+  # build any size matrix from given 2d array
+  # returns the created matrix
+  def build_matrix(array):
+    # figure out asserts for this, easy to mess up, hard to notice when debugging
+
+    new_matrix = Matrix(len(array[0]), len(array))
+
+    new_matrix.matrix = array
+    #for i in range(len(array)):
+    #  for j in range(len(array[0])):
+    #    new_matrix.matrix[i][j] = array[i][j]
+    
+    return new_matrix
 
   def multiply_matrix(self, obj):
     assert isinstance(obj, Matrix)
@@ -102,6 +116,31 @@ class Matrix():
         transpose.matrix[i][j] = self.matrix[j][i]
 
     return transpose
+  
+  # calculate determinant of 2x2 matrix
+  def determinant(self):
+    assert(self.height == 2)
+    assert(self.width == 2)
+
+    return self.matrix[1][1] * self.matrix[0][0] - self.matrix[1][0] * self.matrix[0][1]
+  
+  def submatrix(self, row, col):
+    assert(row <= self.height - 1)
+    assert(col <= self.width - 1)
+
+    submatrix = Matrix(self.height - 1, self.width - 1)
+    x = 0
+    y = 0
+    for i in range(self.height - 1):
+      if x == row: x = x + 1
+      y = 0
+      for j in range(self.width - 1):
+        if y == col: y = y + 1
+        submatrix.matrix[i][j] = self.matrix[x][y]
+        y = y + 1
+      x = x + 1
+      
+    return submatrix
 
 
 # global identity matrices

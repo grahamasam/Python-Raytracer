@@ -9,6 +9,7 @@ class TestMatrix(unittest.TestCase):
     self.n.set_index(0,0,1)
     self.a = Matrix.build_4_matrix((1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2))
     self.b = Matrix.build_4_matrix((-2,1,2,3,3,2,1,-1,4,3,6,5,1,2,7,8))
+    self.three = Matrix.build_matrix(([1,2,3],[-1,-2,-3],[0,1,2]))
   
   def test_constructor(self):
     self.assertEqual(self.m.width, 4)
@@ -62,6 +63,17 @@ class TestMatrix(unittest.TestCase):
 
   def test_transpose_identity(self):
     self.assertTrue(identity_matrix_4.transpose().equals(identity_matrix_4))
+
+  def test_build_matrix(self):
+    array = ([1,2,3,4],[-1,-2,-3,-4],[2,3,4,5])
+    two = Matrix.build_matrix(array)
+    #print(two)
+
+  def test_submatrix(self):
+    sub = self.three.submatrix(1,1)
+    sub1 = self.three.submatrix(0,2)
+    #print(sub)
+    #print(sub1)
 
 if __name__ == "__main__":
   unittest.main()
