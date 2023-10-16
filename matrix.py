@@ -1,4 +1,5 @@
 from tuple import Tuple
+import math
 
 class Matrix():
   # class to represent matrices of different widths and heights
@@ -29,7 +30,7 @@ class Matrix():
 
     for i in range(self.height):
       for j in range(self.width):
-        if (self.get_index(i,j) != obj.get_index(i,j)):
+        if (abs(self.get_index(i,j) - obj.get_index(i,j)) >= allowed_error):
           return False
         
     return True
@@ -126,6 +127,8 @@ class Matrix():
 
     return self.matrix[1][1] * self.matrix[0][0] - self.matrix[1][0] * self.matrix[0][1]
   
+  # recursively evaluate determinant of given sqaure matrix using the cofactor expansion 
+  # theorem.
   def determinant(self):
     assert(self.height == self.width)
     det = 0
@@ -182,8 +185,37 @@ class Matrix():
         raise ValueError("Matrix must be square for cofactors.")
     submatrix = self.submatrix(row,col)
     return  (-1) ** (row + col) * submatrix.determinant()
+  
+  def is_invertible(self):
+    if self.determinant() == 0:
+      return False
+    return True
 
+
+  def inverse(self):
+    if not self.is_invertible():
+      return False
+    
+    inverted_matrix = Matrix(self.height, self.width)
+    determinant = self.determinant()
+
+    for i in range(self.height):
+      for j in range(self.width):
+        cofactor = self.cofactor(i,j)
+        # switch order to transpose matrix as we build it
+        inverted_matrix.matrix[j][i] = cofactor / determinant
+
+    return inverted_matrix
+  
+  # Matrix Transformation functions
+
+  def generate_translation(x, y, z):
+    pass
 
 # global identity matrices
 
 identity_matrix_4 = Matrix.build_4_matrix((1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1))
+
+# allowed error for floating point impercision
+
+allowed_error = 0.000001

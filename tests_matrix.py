@@ -93,5 +93,37 @@ class TestMatrix(unittest.TestCase):
     self.assertEqual(matrix.cofactor(0,1), 447)
     self.assertEqual(matrix.determinant(), -4071)
 
+  def test_is_invertible(self):
+    invertible = Matrix.build_matrix(([-2,-8,3,5],[-3,1,7,3],[1,2,-9,6],[-6,7,7,-9]))
+    not_invertible = Matrix.build_matrix(([-2,-8,3,5],[-3,1,7,3],[1,2,-9,6],[0,0,0,0]))
+    self.assertTrue(invertible.is_invertible())
+    self.assertFalse(not_invertible.is_invertible())
+
+  def test_inverse(self):
+    matrix = Matrix.build_matrix(([-5,2,6,-8],[1,-5,1,8],[7,7,-6,-7],[1,-3,7,4]))
+
+    inverse = matrix.inverse()
+
+    self.assertEqual(matrix.determinant(), 532)
+    self.assertEqual(matrix.cofactor(2,3), -160)
+    self.assertEqual(inverse.get_index(3,2), -160/532)
+    self.assertEqual(matrix.cofactor(3,2), 105)
+    self.assertEqual(inverse.get_index(2,3), 105/532)
+
+  def test_inverse_2(self):
+    matrix = Matrix.build_matrix(([8,-5,9,2],[7,5,6,1],[-6,0,9,6],[-3,0,-9,-4]))
+
+    inverse = matrix.inverse()
+
+    self.assertEqual(matrix.cofactor(0,0) / matrix.determinant(), inverse.get_index(0,0))
+    self.assertEqual(matrix.cofactor(1,0) / matrix.determinant(), inverse.get_index(0,1))
+
+  def test_inverse_3(self):
+    a = Matrix.build_matrix(([8,-5,9,2],[7,5,6,1],[-6,0,9,6],[-3,0,-9,-4]))
+    b = Matrix.build_matrix(([-5,2,6,-8],[1,-5,1,8],[7,7,-6,-7],[1,-3,7,4]))
+
+    c = a * b
+    self.assertTrue(a.equals(c * b.inverse()))
+
 if __name__ == "__main__":
   unittest.main()
