@@ -44,7 +44,7 @@ class Tuple():
     return Tuple(self.x + other.x, self.y + other.y, self.z + other.z, self.w + other.w)
   
   def __sub__(self, other):
-    return Tuple(self.x - other.x, self.y - other.y, self.z - other.z, self.w + other.w)
+    return Tuple(self.x - other.x, self.y - other.y, self.z - other.z, self.w - other.w)
 
   # override unary minus operator for -vector negation
   def __neg__(self):
