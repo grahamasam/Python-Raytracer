@@ -24,7 +24,10 @@ class Tuple():
     return False
   
   def equals(self, tuple):
-    return self.x == tuple.x and self.y == tuple.y and self.z == tuple.z and self.w == tuple.w
+    return abs(self.x - tuple.x) <= allowed_error and \
+           abs(self.y - tuple.y) <= allowed_error and \
+           abs(self.z - tuple.z) <= allowed_error and \
+           abs(self.w - tuple.w) <= allowed_error
   
   def add(self, tuple):
     return Tuple(self.x + tuple.x, self.y + tuple.y, self.z + tuple.z, self.w + tuple.w)
@@ -72,3 +75,6 @@ class Tuple():
   def normalize(self):
     return self / self.magnitude()
 
+
+ # allowed error for floating point impercision
+allowed_error = 0.000001

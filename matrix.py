@@ -1,4 +1,4 @@
-from tuple import Tuple
+from tuple import Tuple, allowed_error
 import math
 
 class Matrix():
@@ -210,12 +210,60 @@ class Matrix():
   # Matrix Transformation functions
 
   def generate_translation(x, y, z):
-    pass
+    translation = Matrix.build_4_matrix((1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1))
+    translation.matrix[0][3] = x
+    translation.matrix[1][3] = y
+    translation.matrix[2][3] = z
+    return translation
+  
+  def generate_scaling(x, y, z):
+    scale = Matrix(4,4)
+    scale.matrix[0][0] = x
+    scale.matrix[1][1] = y
+    scale.matrix[2][2] = z
+    scale.matrix[3][3] = 1
+    return scale
+  
+  def generate_rotation_x(rad):
+    rotate = Matrix(4,4)
+    rotate.matrix[0][0] = 1
+    rotate.matrix[1][1] = math.cos(rad)
+    rotate.matrix[1][2] = -math.sin(rad)
+    rotate.matrix[2][1] = math.sin(rad)
+    rotate.matrix[2][2] = math.cos(rad)
+    rotate.matrix[3][3] = 1
+    return rotate
+  
+  def generate_rotation_y(rad):
+    rotate = Matrix(4,4)
+    rotate.matrix[0][0] = math.cos(rad)
+    rotate.matrix[0][2] = math.sin(rad)
+    rotate.matrix[1][1] = 1
+    rotate.matrix[2][0] = -math.sin(rad)
+    rotate.matrix[2][2] = math.cos(rad)
+    rotate.matrix[3][3] = 1
+    return rotate
+  
+  def generate_rotation_z(rad):
+    rotate = Matrix(4,4)
+    rotate.matrix[0][0] = math.cos(rad)
+    rotate.matrix[0][1] = -math.sin(rad)
+    rotate.matrix[1][0] = math.sin(rad)
+    rotate.matrix[1][1] = math.cos(rad)
+    rotate.matrix[2][2] = 1
+    rotate.matrix[3][3] = 1
+    return rotate
+  
+  def generate_shear(x_y, x_z, y_x, y_z, z_x, z_y):
+    shear = Matrix.build_4_matrix((1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1))
+    shear.matrix[0][1] = x_y
+    shear.matrix[0][2] = x_z
+    shear.matrix[1][0] = y_x
+    shear.matrix[1][2] = y_z
+    shear.matrix[2][0] = z_x
+    shear.matrix[2][1] = z_y
+    return shear
+
 
 # global identity matrices
-
 identity_matrix_4 = Matrix.build_4_matrix((1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1))
-
-# allowed error for floating point impercision
-
-allowed_error = 0.000001

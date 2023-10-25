@@ -1,6 +1,9 @@
 import unittest
 from matrix import Matrix, identity_matrix_4
 from tuple import Tuple
+from point import Point
+from vector import Vector
+import math
 
 class TestMatrix(unittest.TestCase):
   def setUp(self):
@@ -124,6 +127,97 @@ class TestMatrix(unittest.TestCase):
 
     c = a * b
     self.assertTrue(a.equals(c * b.inverse()))
+
+  def test_translation(self):
+    translation = Matrix.generate_translation(5,-3,2)
+    p = Point(-3,4,5)
+    self.assertTrue(translation * p, Point(2,1,7))
+
+  def test_inverse_translation(self):
+    translation = Matrix.generate_translation(5,-3,2)
+    inverse = translation.inverse()
+    p = Point(2,1,7)
+    self.assertTrue(inverse * p, Point(-3,4,5))
+
+  def test_vector_transform(self):
+    # a transform matrix should not affect a vector
+    # w=0 as the last element in the vector tuple prevents the
+    # values in the 4th row of the transform matrix from affecting
+    # the vector's values
+    v = Vector(5, -14, 68)
+    translation = Matrix.generate_translation(5,-3,2)
+
+    self.assertTrue((translation * v).equals(v))
+
+  def test_scaling(self):
+    p = Point(2,1,7)
+    scaling = Matrix.generate_scaling(3,-2, 4)
+    self.assertTrue((scaling * p).equals(Point(6,-2,28)))
+
+  def test_inverse_scaling(self):
+    scaling = Matrix.generate_scaling(3,-2, 4)
+    inverse = scaling.inverse()
+    p = Point(6,-2,28)
+    self.assertTrue((inverse * p).equals(Point(2,1,7)))
+
+  def test_reflection(self):
+    # use scaling matrix with negative values to reflect over axis
+    scaling = Matrix.generate_scaling(-1,1,1)
+    p = Point(6,-2,28)
+    self.assertTrue((scaling * p).equals(Point(-6,-2,28)))
+
+  def test_rotate_x(self):
+    p = Point(0,1,0)
+    eighth = Matrix.generate_rotation_x(math.pi/4)
+    fourth = Matrix.generate_rotation_x(math.pi/2)
+    self.assertTrue((eighth * p).equals(Point(0, math.sqrt(2)/2, math.sqrt(2)/2)))
+    self.assertTrue((fourth * p).equals(Point(0,0,1)))
+
+  def test_inverse_rotate_x(self):
+    p = Point(0,1,0)
+    fourth = Matrix.generate_rotation_x(math.pi/2)
+    inverse = fourth.inverse()
+    self.assertTrue((inverse * p).equals(Point(0,0,-1)))
+
+  def test_rotate_y(self):
+    p = Point(0,0,1)
+    eighth = Matrix.generate_rotation_y(math.pi/4)
+    fourth = Matrix.generate_rotation_y(math.pi/2)
+    self.assertTrue((eighth * p).equals(Point(math.sqrt(2)/2, 0, math.sqrt(2)/2)))
+    self.assertTrue((fourth * p).equals(Point(1,0,0)))
+
+  def test_rotate_z(self):
+    p = Point(0,1,0)
+    eighth = Matrix.generate_rotation_z(math.pi/4)
+    fourth = Matrix.generate_rotation_z(math.pi/2)
+    self.assertTrue((eighth * p).equals(Point(-math.sqrt(2)/2, math.sqrt(2)/2, 0)))
+    self.assertTrue((fourth * p).equals(Point(-1,0,0)))
+
+  def test_shear(self):
+    # shear x in proportion to y
+    transform = Matrix.generate_shear(1,0,0,0,0,0)
+    p = Point(2,3,4)
+    self.assertTrue((transform * p).equals(Point(5,3,4)))
+
+    # shear x in proportion to z
+    transform = Matrix.generate_shear(0,1,0,0,0,0)
+    self.assertTrue((transform * p).equals(Point(6,3,4)))
+
+    # shear y in proportion to x
+    transform = Matrix.generate_shear(0,0,1,0,0,0)
+    self.assertTrue((transform * p).equals(Point(2,5,4)))
+
+    # shear y in proportion to z
+    transform = Matrix.generate_shear(0,0,0,1,0,0)
+    self.assertTrue((transform * p).equals(Point(2,7,4)))
+
+    # shear z in proportion to x
+    transform = Matrix.generate_shear(0,0,0,0,1,0)
+    self.assertTrue((transform * p).equals(Point(2,3,6)))
+
+    # shear z in proportion to y
+    transform = Matrix.generate_shear(0,0,0,0,0,1)
+    self.assertTrue((transform * p).equals(Point(2,3,7)))
 
 if __name__ == "__main__":
   unittest.main()
