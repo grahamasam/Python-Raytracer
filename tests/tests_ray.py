@@ -3,6 +3,7 @@ from ray import Ray
 from point import Point
 from vector import Vector
 from sphere import Sphere
+from matrix import Matrix
 
 class TestMatrix(unittest.TestCase):
   def setUp(self):
@@ -46,6 +47,21 @@ class TestMatrix(unittest.TestCase):
     self.assertEqual(intersection[0].t, -6)
     self.assertEqual(intersection[1].t, -4)
     self.assertEqual(intersection[0].obj, sphere)
+
+  def test_translate_ray(self):
+    ray = Ray(Point(1,5,6), Vector(1,0,1))
+    m = Matrix.generate_translation(1,2,3)
+    r = ray.transform(m)
+    self.assertTrue(r.origin.equals(Point(2,7,9)))
+    self.assertTrue(r.direction.equals(Vector(1,0,1)))
+
+  def test_scale_ray(self):
+    ray = Ray(Point(1,5,6), Vector(1,0,1))
+    m = Matrix.generate_scaling(2,2,3)
+    r = ray.transform(m)
+    self.assertTrue(r.origin.equals(Point(2,10,18)))
+    self.assertTrue(r.direction.equals(Vector(2,0,3)))
+
 
 if __name__ == "__main__":
   unittest.main()

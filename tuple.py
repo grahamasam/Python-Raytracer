@@ -75,6 +75,5 @@ class Tuple():
   def normalize(self):
     return self / self.magnitude()
 
-
  # allowed error for floating point impercision
 allowed_error = 0.000001

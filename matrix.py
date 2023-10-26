@@ -1,4 +1,5 @@
 from tuple import Tuple, allowed_error
+from point import Point
 import math
 
 class Matrix():
