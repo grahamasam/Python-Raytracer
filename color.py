@@ -18,10 +18,10 @@ class Color(Tuple):
     assert isinstance(other, Color)
     return Color(self.x - other.x, self.y - other.y, self.z - other.z)
   
-
   def multiply(self, obj):
     assert isinstance(obj, Color)
     return Color(self.x * obj.x, self.y * obj.y, self.z * obj.z)
+  
   
 
   

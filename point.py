@@ -8,3 +8,8 @@ class Point(Tuple):
     self.y = y
     self.z = z
     self.w = 1.0
+
+  @staticmethod
+  def to_point(tuple):
+    assert isinstance(tuple, Tuple)
+    return Point(tuple.x, tuple.y, tuple.z)

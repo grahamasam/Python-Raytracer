@@ -8,6 +8,11 @@ class Vector(Tuple):
     self.y = y
     self.z = z
     self.w = 0.0
+
+  @staticmethod
+  def to_vector(tuple):
+    assert isinstance(tuple, Tuple)
+    return Vector(tuple.x, tuple.y, tuple.z)
   
   # cross product for 3 dimensional vectors
   def cross(self, obj):
@@ -15,3 +20,6 @@ class Vector(Tuple):
     return Vector(self.y * obj.z - self.z * obj.y, 
                   self.z * obj.x - self.x * obj.z,
                   self.x * obj.y - self.y * obj.x )
+  
+  def reflect(self, normal):
+    return self - normal * 2 * self.dot_product(normal)

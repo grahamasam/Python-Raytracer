@@ -34,6 +34,11 @@ class testSphere(unittest.TestCase):
     intersects = s.intersection(r)
     self.assertEqual(len(intersects), 0)
 
+  def test_normal_at_translated(self):
+    s = Sphere()
+    s.set_transform(Matrix.generate_translation(0,1,0))
+    n = s.normal_at(Point(0, 1.70711, -0.70711))
+    self.assertTrue(n.equals(Vector(0, 0.70711, -0.70711)))
 
 if __name__ == "__main__":
   unittest.main()

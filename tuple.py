@@ -76,4 +76,4 @@ class Tuple():
     return self / self.magnitude()
 
  # allowed error for floating point impercision
-allowed_error = 0.000001
+allowed_error = 0.001

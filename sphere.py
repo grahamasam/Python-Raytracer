@@ -2,16 +2,19 @@ from point import Point
 from ray import Ray
 from matrix import Matrix
 from intersection import Intersection
+from material import Material
+from vector import Vector
 import math
 
 class Sphere():
   def __init__(self):
-    # initialize unit sphere
+    # initialize unit sphere with default material
     # cannot assign a sphere with different values for center and radius, we will use
     # transform matrices to resize, translate, and squeeze/stretch sphere into place.
     self.center = Point(0,0,0)
     self.radius = 1
     self.transform_matrix = Matrix.build_4_matrix((1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1))
+    self.material = Material()
 
   # function to calculate a ray's intersection with a sphere. returns a list of two
   # intersection objects or an empty list if there are none. If the ray is tangent
@@ -40,5 +43,17 @@ class Sphere():
   def set_transform(self, matrix):
     self.transform_matrix = matrix
 
-  def normal_at(self, Point):
-    pass
+  def normal_at(self, w_point):
+    assert isinstance(w_point, Point)
+    o_point = self.transform_matrix.inverse() * w_point
+    #o_normal = o_point - Point(0,0,0)
+
+    w_normal = self.transform_matrix.inverse().transpose() * o_point
+    w_normal.w = 0
+
+    return Vector.to_vector(w_normal.normalize())
+  
+  def set_material(self, m):
+    assert isinstance(m, Material)
+
+    self.material = m

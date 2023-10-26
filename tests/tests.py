@@ -84,5 +84,11 @@ class TestTuplePointVector(unittest.TestCase):
   def test_multiply_colors(self):
     self.assertTrue((self.color1.multiply(self.color2)).equals(Color(0.5, 0, 0)))
 
+  def test_reflect_vector(self):
+    v = Vector(1,-1,0)
+    n = Vector(0,1,0)
+    r = v.reflect(n)
+    self.assertTrue(r.equals(Vector(1,1,0)))
+
 if __name__ == "__main__":
   unittest.main()
