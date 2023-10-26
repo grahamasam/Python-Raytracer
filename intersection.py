@@ -1,3 +1,6 @@
+from ray import Ray
+from vector import Vector
+from point import Point
 
 class Intersection():
   # represents an intersection instance, stores t value of intersection and intersected object
@@ -16,3 +19,30 @@ class Intersection():
         return intersection
 
     return None
+  
+  def prepare_computations(intersect, ray):
+    assert isinstance(intersect, Intersection)
+    assert isinstance(ray, Ray)
+    computations = Computations()
+    computations.t = intersect.t
+    computations.obj = intersect.obj
+    computations.point = Point.to_point(ray.position(computations.t))
+    computations.eyev = Vector.to_vector(-ray.direction)
+    computations.normalv = computations.obj.normal_at(computations.point)
+
+    if computations.normalv.dot_product(computations.eyev) < 0:
+      computations.inside = True
+      computations.normalv = Vector.to_vector(-computations.normalv)
+    else:
+      computations.inside = False
+
+    return computations
+
+class Computations():
+  def __init__(self):
+    self.t = 0
+    self.obj = None
+    self.point = None
+    self.eyev = None
+    self.normalv = None
+    self.inside = False
