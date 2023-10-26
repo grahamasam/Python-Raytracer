@@ -24,7 +24,6 @@ class Point_Light():
     effective_color = m.color.multiply(light.intensity)
 
     lightv = (light.position - point).normalize()
-    print(lightv)
 
     ambient = effective_color * m.ambient
 

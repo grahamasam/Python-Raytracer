@@ -1,5 +1,6 @@
 from tuple import Tuple, allowed_error
 from point import Point
+from vector import Vector
 import math
 
 class Matrix():
@@ -265,6 +266,16 @@ class Matrix():
     shear.matrix[2][1] = z_y
     return shear
 
+  def view_transformation(at, to, up):
+    forward = Vector.to_vector((to - at).normalize())
+
+    left = forward.cross(Vector.to_vector(up.normalize()))
+
+    true_up = left.cross(forward)
+
+    orientation = Matrix.build_matrix(([left.x,left.y,left.z,0],[true_up.x,true_up.y,true_up.z,0],[-forward.x,-forward.y,-forward.z,0],[0,0,0,1]))
+    
+    return orientation * Matrix.generate_translation(-at.x, -at.y, -at.z)
 
 # global identity matrices
 identity_matrix_4 = Matrix.build_4_matrix((1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1))

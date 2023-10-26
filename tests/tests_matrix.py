@@ -219,5 +219,20 @@ class TestMatrix(unittest.TestCase):
     transform = Matrix.generate_shear(0,0,0,0,0,1)
     self.assertTrue((transform * p).equals(Point(2,3,7)))
 
+  def test_view_transform_default(self):
+    at = Point(0,0,0)
+    to = Point(0,0,-1)
+    up = Vector(0,1,0)
+    t = Matrix.view_transformation(at,to,up)
+    self.assertTrue(t.equals(identity_matrix_4))
+
+  def test_view_transformation(self):
+    at = Point(1,3,2)
+    to = Point(4,-2,8)
+    up = Vector(1,1,0)
+    t = Matrix.view_transformation(at,to,up)
+    m = Matrix.build_matrix(([-0.50709, 0.50709, 0.67612, -2.36643],[0.76772, 0.60609, 0.12122, -2.82843],[-0.35857, 0.59761, -0.71714, 0.00000],[0.00000, 0.00000, 0.00000, 1.00000]))
+    self.assertTrue(t.equals(m))
+
 if __name__ == "__main__":
   unittest.main()
