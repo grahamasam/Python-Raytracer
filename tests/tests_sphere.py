@@ -107,5 +107,13 @@ class testSphere(unittest.TestCase):
     image = c.render(self.scene)
     self.assertTrue(image.pixel_at(5,5).equals(Color(0.38066, 0.47583, 0.2855)))
 
+  def test_is_shadowed1(self):
+    p = Point(0,10,0)
+    self.assertFalse(self.scene.is_shadowed(p))
+
+  def test_is_shadowed2(self):
+    p = Point(10,-10,10)
+    self.assertTrue(self.scene.is_shadowed(p))
+
 if __name__ == "__main__":
   unittest.main()

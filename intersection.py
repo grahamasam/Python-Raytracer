@@ -1,6 +1,7 @@
 from ray import Ray
 from vector import Vector
 from point import Point
+from tuple import allowed_error
 
 class Intersection():
   # represents an intersection instance, stores t value of intersection and intersected object
@@ -29,6 +30,7 @@ class Intersection():
     computations.point = Point.to_point(ray.position(computations.t))
     computations.eyev = Vector.to_vector(-ray.direction)
     computations.normalv = computations.obj.normal_at(computations.point)
+    computations.over_point = Point.to_point(computations.point + computations.normalv * allowed_error)
 
     if computations.normalv.dot_product(computations.eyev) < 0:
       computations.inside = True
@@ -46,3 +48,4 @@ class Computations():
     self.eyev = None
     self.normalv = None
     self.inside = False
+    self.over_point = None

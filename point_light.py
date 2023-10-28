@@ -14,7 +14,7 @@ class Point_Light():
     self.position = position
     self.intensity = intensity
 
-  def lighting(m, light, point, eyev, normalv):
+  def lighting(m, light, point, eyev, normalv, in_shadow):
     assert isinstance(m, Material)
     assert isinstance(light, Point_Light)
     assert isinstance(point, Point)
@@ -26,6 +26,10 @@ class Point_Light():
     lightv = (light.position - point).normalize()
 
     ambient = effective_color * m.ambient
+
+    # if pixel is in shadow, ignore the specular and diffuse componenets
+    if in_shadow == True:
+      return ambient
 
     light_dot_normal = lightv.dot_product(normalv)
 

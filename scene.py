@@ -1,6 +1,7 @@
 from ray import Ray
 from intersection import Computations, Intersection
 from point_light import Point_Light
+from vector import Vector
 from color import Color
 
 class Scene():
@@ -28,9 +29,25 @@ class Scene():
   def set_light(self, light):
     self.light = light
 
+  def is_shadowed(self, point):
+    direction = self.light.position - point
+    distance = direction.magnitude()
+    n_direction = Vector.to_vector(direction.normalize())
+
+    r = Ray(point, n_direction)
+    intersections_to_light = self.intersect_scene(r)
+    # h = the nearest hit between our point and light source
+    h = Intersection.hit(intersections_to_light)
+
+    if h != None and h.t < distance:
+      return True
+    else:
+      return False
+
   def shade_hit(self, comps):
     assert isinstance(comps, Computations)
-    return Point_Light.lighting(comps.obj.material, self.light, comps.point, comps.eyev, comps.normalv)
+    shadowed = self.is_shadowed(comps.over_point)
+    return Point_Light.lighting(comps.obj.material, self.light, comps.over_point, comps.eyev, comps.normalv, shadowed)
   
   def color_at(self, ray):
     intersect_list = self.intersect_scene(ray)
