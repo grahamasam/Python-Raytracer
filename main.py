@@ -45,7 +45,7 @@ class main():
 
   scene.set_light(Point_Light(Point(10,10,-3), Color(1,1,1)))
 
-  camera = Camera(80,50,math.pi/2.5)
+  camera = Camera(566,350,math.pi/2.5)
   camera.transform = Matrix.view_transformation(Point(0,1.5,-5),Point(0,1,0),Vector(0,1,-0.8))
 
   canvas = camera.render(scene)
